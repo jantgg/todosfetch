@@ -10,18 +10,20 @@ const Home = () => {
 	return (
 		<div className="row d-flex flex-column">
 			<div className="col-3 mx-auto mt-5"><strong>To Dos</strong></div>
-			<input className="col-3 mx-auto mt-2" onKeyUp={(e)=>{
-				if(e.key =="Enter"){
-					let newTodos = e.target.value;
-					setTodos([...todos, newTodos]); 
+			<input className="col-3 mx-auto mt-2" placeholder="Add To Do" onKeyUp={(e)=>{
+				if(e.key =="Enter" && e.target.value.trim() !=""){
+					setTodos([...todos, e.target.value]); 
+					e.target.value="";
 				}
 			}}></input>
             {todos.map((todo, index)=>{
 				return (
 					<div key={index} className="col-3 mx-auto mt-1 bg-light d-flex justify-content-between align-items-center">
                     <div>{todo}</div>
-					<button type="button" class="btn btn-danger" onClick={()=>{
-					delete todos[{index}]}}><i class="fa-solid fa-trash-can"></i></button>
+					<button type="button" className="btn btn-danger" onClick={()=>{
+						setTodos(todos.filter((e, i)=>e != todo))
+					
+					}}><i className="fa-solid fa-trash-can"></i></button>
 					</div>
 				)
 			})};
